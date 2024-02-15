@@ -1,0 +1,11 @@
+[gd_scene load_steps=3 format=3 uid="uid://d1t1ppeoujr0r"]
+
+[ext_resource type="Texture2D" uid="uid://cntvs2wa7so12" path="res://Sprites/Railshooter_prototype/Railtrack_sprite_v2(tiled)_rot90.png" id="1_qys8j"]
+[ext_resource type="Script" path="res://Scripts/RailManager.gd" id="2_sbx1h"]
+
+[node name="Rail" type="Line2D"]
+points = PackedVector2Array(0, 0, 0, -100)
+width = 30.0
+texture = ExtResource("1_qys8j")
+texture_mode = 1
+script = ExtResource("2_sbx1h")

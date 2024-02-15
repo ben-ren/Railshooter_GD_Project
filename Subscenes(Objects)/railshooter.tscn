@@ -1,0 +1,23 @@
+[gd_scene load_steps=4 format=3 uid="uid://bssxw8rsligum"]
+
+[ext_resource type="Texture2D" uid="uid://cb7b1ddncusaj" path="res://Sprites/Railshooter_prototype/Steam_Engine.png" id="1_5pj76"]
+[ext_resource type="Script" path="res://Scripts/railshooter.gd" id="1_jxcqr"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_tr1il"]
+size = Vector2(10, 30)
+
+[node name="Railshooter" type="Node2D"]
+script = ExtResource("1_jxcqr")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+scale = Vector2(0.4, 0.4)
+texture = ExtResource("1_5pj76")
+
+[node name="RigidBody2D" type="RigidBody2D" parent="."]
+collision_layer = 2
+collision_mask = 2
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="RigidBody2D"]
+position = Vector2(0, 6)
+scale = Vector2(4, 4)
+shape = SubResource("RectangleShape2D_tr1il")

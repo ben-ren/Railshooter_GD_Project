@@ -1,0 +1,117 @@
+[gd_scene load_steps=9 format=3 uid="uid://d34jqft0o0ckq"]
+
+[ext_resource type="Texture2D" uid="uid://ca6a3a0c6aeih" path="res://Sprites/greybox_sprites/square.png" id="1_ch1nq"]
+[ext_resource type="PackedScene" uid="uid://bssxw8rsligum" path="res://Subscenes(Objects)/railshooter.tscn" id="2_ilv08"]
+[ext_resource type="PackedScene" uid="uid://d1t1ppeoujr0r" path="res://Subscenes(Objects)/Rail_Segment.tscn" id="3_lnqdx"]
+[ext_resource type="Script" path="res://Scripts/C_Sharp_Scripts/PathingTree.cs" id="3_wgt8d"]
+[ext_resource type="Script" path="res://Scripts/C_Sharp_Scripts/GunController.cs" id="5_1y7qx"]
+[ext_resource type="Texture2D" uid="uid://ck34w17yc4e2l" path="res://icon.svg" id="6_igk01"]
+[ext_resource type="Script" path="res://Scripts/C_Sharp_Scripts/ObjectDetection.cs" id="6_sq5uv"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_qvxn7"]
+radius = 20.0
+
+[node name="Node" type="Node"]
+
+[node name="TextureRect" type="TextureRect" parent="."]
+visible = false
+offset_left = -576.0
+offset_top = -324.0
+offset_right = 576.0
+offset_bottom = 324.0
+texture = ExtResource("1_ch1nq")
+
+[node name="PathingTree" type="Node2D" parent="." node_paths=PackedStringArray("nodes", "Railshooter", "ray")]
+script = ExtResource("3_wgt8d")
+nodes = [NodePath("Area2D"), NodePath("Area2D2"), NodePath("Area2D3"), NodePath("Area2D4"), NodePath("Area2D5"), NodePath("Area2D6")]
+graph_ptr_dict = {
+0: [1],
+1: [2, 3],
+2: [4],
+3: [4],
+4: [5],
+5: []
+}
+Railshooter = NodePath("../Railshooter")
+RangeLimit = 150.0
+ray = NodePath("../Railshooter/Railgun/RayCast2D")
+
+[node name="Area2D" type="Area2D" parent="PathingTree"]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="PathingTree/Area2D"]
+shape = SubResource("CircleShape2D_qvxn7")
+
+[node name="Area2D2" type="Area2D" parent="PathingTree"]
+position = Vector2(0, -100)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="PathingTree/Area2D2"]
+shape = SubResource("CircleShape2D_qvxn7")
+
+[node name="Area2D3" type="Area2D" parent="PathingTree"]
+position = Vector2(100, -200)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="PathingTree/Area2D3"]
+shape = SubResource("CircleShape2D_qvxn7")
+
+[node name="Area2D4" type="Area2D" parent="PathingTree"]
+position = Vector2(-100, -200)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="PathingTree/Area2D4"]
+shape = SubResource("CircleShape2D_qvxn7")
+
+[node name="Area2D5" type="Area2D" parent="PathingTree"]
+position = Vector2(0, -300)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="PathingTree/Area2D5"]
+shape = SubResource("CircleShape2D_qvxn7")
+
+[node name="Area2D6" type="Area2D" parent="PathingTree"]
+position = Vector2(0, -400)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="PathingTree/Area2D6"]
+shape = SubResource("CircleShape2D_qvxn7")
+
+[node name="Rail" parent="PathingTree" instance=ExtResource("3_lnqdx")]
+
+[node name="Rail1" parent="PathingTree" instance=ExtResource("3_lnqdx")]
+position = Vector2(0, -100)
+points = PackedVector2Array(0, 0, 100, -100)
+
+[node name="Rail2" parent="PathingTree" instance=ExtResource("3_lnqdx")]
+position = Vector2(0, -100)
+points = PackedVector2Array(0, 0, -100, -100)
+
+[node name="Rail3" parent="PathingTree" instance=ExtResource("3_lnqdx")]
+position = Vector2(100, -200)
+points = PackedVector2Array(0, 0, -100, -100)
+
+[node name="Rail4" parent="PathingTree" instance=ExtResource("3_lnqdx")]
+position = Vector2(-100, -200)
+points = PackedVector2Array(0, 0, 100, -100)
+
+[node name="Rail5" parent="PathingTree" instance=ExtResource("3_lnqdx")]
+position = Vector2(0, -300)
+
+[node name="Railshooter" parent="." node_paths=PackedStringArray("origin", "target") instance=ExtResource("2_ilv08")]
+origin = NodePath("../PathingTree/Area2D")
+target = NodePath("../PathingTree/Area2D2")
+speed = 100000.0
+accel = 5.0
+
+[node name="Camera2D" type="Camera2D" parent="Railshooter"]
+
+[node name="Railgun" type="Node2D" parent="Railshooter"]
+rotation = -1.5708
+script = ExtResource("5_1y7qx")
+
+[node name="RayCast2D" type="RayCast2D" parent="Railshooter/Railgun"]
+position = Vector2(1, 0)
+rotation = 1.5708
+target_position = Vector2(0, -200)
+collide_with_areas = true
+script = ExtResource("6_sq5uv")
+
+[node name="Sprite2D" type="Sprite2D" parent="Railshooter/Railgun"]
+position = Vector2(10, 0)
+scale = Vector2(0.5, 0.2)
+texture = ExtResource("6_igk01")
