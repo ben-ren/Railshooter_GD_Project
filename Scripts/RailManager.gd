@@ -20,6 +20,12 @@ func get_start_node():
 func get_end_node():
 	return endPoint
 
+func set_start_point(point : Node2D):
+	startPoint = point
+
+func set_end_point(point : Node2D):
+	endPoint = point
+
 # Generate Area2D & ColliderShape2D with SegmentShape2D
 func generateColliderChildren():
 	area = Area2D.new()
@@ -27,6 +33,7 @@ func generateColliderChildren():
 	
 	col = CollisionShape2D.new()
 	area.add_child(col)
+	area.add_to_group("rail")
 	
 	segment_shape = SegmentShape2D.new()
 	col.shape = segment_shape

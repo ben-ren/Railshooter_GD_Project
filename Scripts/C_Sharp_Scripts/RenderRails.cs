@@ -17,6 +17,8 @@ public partial class RenderRails : Object{
 
 			//Attach Script
 			line.SetScript(railManagerScript);
+			line.CallDeferred("set_start_point", targetNode);		//Sets the Node2D startPoint variable as the input targetNode. 
+			line.CallDeferred("set_end_point", newNode);		//Sets the Node2D startPoint variable as the input targetNode. 
 
 			line.Texture = rail_texture;					//Assign rail_texture to line
 			line.TextureMode = Line2D.LineTextureMode.Tile;	//Set Texture Mode to 'Tiled'

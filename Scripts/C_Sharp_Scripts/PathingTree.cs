@@ -24,10 +24,21 @@ public partial class PathingTree : Node2D
 
 	public override void _Process(double delta)
 	{
+		GD.Print(ray.GetCollidedObject());
 		PositionLogic();
 		//Shoots rail on left click. If ray ISN'T colliding with TargetNode
 		if(Input.IsActionJustPressed("left_click") && Railshooter.HasMethod("TrainController")){
 			ShootRail(range);
+		//null-conditional operator ('?'). It returns an assigned default boolean value when the input variable is null. 
+		//Example here uses 'ray.GetCollidedObject()?' if this returns null then the following section '?? false' will default that conditional to false.
+		} else if(Input.IsActionJustPressed("right_click") && (ray.GetCollidedObject()?.IsInGroup("rail") ?? false) ){
+			/*TODO: 
+			* 1. Extract RailManager data to access startPoint and endPoint for graph & array editing.
+			* 2. Write DeleteNode function to remove Line2D from scene.
+			* 3. Delete the attached TargetNode IF after Line2D removal it becomes a loose node
+			* 4. Update the graph to remove the index of the removed node from all associated nodes using RemoveFromGraph() function.
+			*/
+			DeleteNode(ray.GetCollidedObject());
 		}
 	}
 
@@ -62,11 +73,11 @@ public partial class PathingTree : Node2D
 	//Calculates the targetPointer position.
 	void PositionLogic(){
 		mousePosition = GetGlobalMousePosition();
-		ray.DetectRailNode(nodes);
+		ray.DetectRailNode(nodes, GetTarget());		//Sets the collisionState variable.
 		if(ray.GetCollisionState() > -2){
-			range = ray.SetCollisionRange(Railshooter.Position);
+			range = ray.SetCollisionRange(Railshooter.Position);	//Set range to collision location. 
 		}else{
-			range = RangeLimit;
+			range = RangeLimit;		//If collisionState = -2 reset range to default.
 		}
 	}
 
@@ -108,6 +119,11 @@ public partial class PathingTree : Node2D
 		return newArea;
 	}
 
+	//Delete's the selected Node and it's children from the scene.
+	public void DeleteNode(Node2D node){
+		RemoveFromGraph(node);
+	}
+
 	//Update the relation between 2 nodes in the dictionary
 	public void UpdateGraph(Node2D startNode, Node2D endNode){
 		int endIndex = nodes.IndexOf(endNode);        // Index of the endNode
@@ -138,5 +154,10 @@ public partial class PathingTree : Node2D
 		}
 
 		SetGraphUpdateState(true);    // Update graph state to prevent rerunning procedure.
+	}
+
+	//Remove's the input Node2D from the graph_ptr_dict
+	public void RemoveFromGraph(Node2D badNode){
+		
 	}
 }
