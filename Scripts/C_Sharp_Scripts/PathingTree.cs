@@ -1,4 +1,5 @@
 using Godot;
+using Godot.NativeInterop;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -24,21 +25,15 @@ public partial class PathingTree : Node2D
 
 	public override void _Process(double delta)
 	{
-		GD.Print(ray.GetCollidedObject());
 		PositionLogic();
 		//Shoots rail on left click. If ray ISN'T colliding with TargetNode
 		if(Input.IsActionJustPressed("left_click") && Railshooter.HasMethod("TrainController")){
 			ShootRail(range);
 		//null-conditional operator ('?'). It returns an assigned default boolean value when the input variable is null. 
 		//Example here uses 'ray.GetCollidedObject()?' if this returns null then the following section '?? false' will default that conditional to false.
+		//Delete's rail on right click 
 		} else if(Input.IsActionJustPressed("right_click") && (ray.GetCollidedObject()?.IsInGroup("rail") ?? false) ){
-			/*TODO: 
-			* 1. Extract RailManager data to access startPoint and endPoint for graph & array editing.
-			* 2. Write DeleteNode function to remove Line2D from scene.
-			* 3. Delete the attached TargetNode IF after Line2D removal it becomes a loose node
-			* 4. Update the graph to remove the index of the removed node from all associated nodes using RemoveFromGraph() function.
-			*/
-			DeleteNode(ray.GetCollidedObject());
+			RemoveRail(ray.GetCollidedObject());
 		}
 	}
 
@@ -119,11 +114,6 @@ public partial class PathingTree : Node2D
 		return newArea;
 	}
 
-	//Delete's the selected Node and it's children from the scene.
-	public void DeleteNode(Node2D node){
-		RemoveFromGraph(node);
-	}
-
 	//Update the relation between 2 nodes in the dictionary
 	public void UpdateGraph(Node2D startNode, Node2D endNode){
 		int endIndex = nodes.IndexOf(endNode);        // Index of the endNode
@@ -156,8 +146,24 @@ public partial class PathingTree : Node2D
 		SetGraphUpdateState(true);    // Update graph state to prevent rerunning procedure.
 	}
 
-	//Remove's the input Node2D from the graph_ptr_dict
-	public void RemoveFromGraph(Node2D badNode){
+	void RemoveRail(Node2D railArea){
+		//Extract RailManager data to access startPoint and endPoint for graph & array editing.
+		Node2D rail = (Node2D)railArea.GetParent();
+		Node2D railStart = (Node2D)rail.Get("startPoint");	//Get's startPoint from RailManager.gd of selected object
+		Node2D railEnd = (Node2D)rail.Get("endPoint");		//Get's endPoint from RailManager.gd of selected object
 		
+		rail.QueueFree();	//Remove Rail object (Line2D) from scene.
+		RemoveFromGraph(railStart, railEnd);	//Update graph to remove relation between start and end points of selected rail
+
+		//TODO: Delete the attached TargetNode(endPoint) IF after Line2D removal it becomes a loose node
+	}
+
+	//Remove's the relation of the input Node2D's from the graph_ptr_dict.
+	//Also completely' remove's the index of the deleted targetNode if node is loose.
+	public void RemoveFromGraph(Node2D start, Node2D end){
+		int startInt = nodes.IndexOf(start);	//Find start index
+		int endInt = nodes.IndexOf(end);		//Find end index
+		//Find start key in graph and Remove end index from start key's values
+		graph_ptr_dict[startInt].Remove(endInt);
 	}
 }
