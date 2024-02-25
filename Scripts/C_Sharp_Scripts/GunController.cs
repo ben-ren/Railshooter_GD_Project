@@ -8,17 +8,24 @@ public partial class GunController : Node2D
 	float angleRad;
 	float angleDeg;
 
-	// Called every frame. 'delta' is the elapsed time since the previous frame.
-	public override void _Process(double delta)
+	Node2D parentNode;
+
+    public override void _Ready()
+    {
+        parentNode = (Node2D)GetParent();
+    }
+
+    // Called every frame. 'delta' is the elapsed time since the previous frame.
+    public override void _Process(double delta)
 	{
 		mousePos = GetGlobalMousePosition();
 		RotateTowards(mousePos);
 	}
 
 	void RotateTowards(Vector2 targetPos){
-		direction = GlobalPosition.DirectionTo(mousePos);
+		direction = GlobalPosition.DirectionTo(targetPos);
 		angleRad = Mathf.Atan2(direction.Y, direction.X);
 		angleDeg = Mathf.RadToDeg(angleRad);
-		RotationDegrees = angleDeg;
+		RotationDegrees = angleDeg - parentNode.RotationDegrees;
 	}
 }

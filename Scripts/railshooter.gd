@@ -1,6 +1,6 @@
 extends Node2D
 
-var MathHelper = preload("./MathHelper.gd")
+const MathHelper = preload("res://Scripts/MathHelper.gd")
 var MathH = MathHelper.new()
 
 @export var origin : Node2D;
@@ -19,14 +19,13 @@ func _ready():
 	csharp_script = get_node("../PathingTree")
 	nodes = csharp_script.GetNodes()
 	graph_ptr_dict = csharp_script.GetGraphPtrDict()
-	
-	PrintNodes()
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _physics_process(delta):
 	UpdateRailLists()
 	MoveTo(target, delta)
 	TrainController()
+	MathH.rotate_towards(self, target.position, speed, get_process_delta_time() * .05)
 	
 	# Sets after reaching target sets next target node
 	if(position.distance_to(target.position) < 1.0):
@@ -78,13 +77,3 @@ func TrainController():
 	elif( Input.is_action_just_pressed("Axis_X-") ):
 		selectedTrackIndex -= 1
 	pass
-
-func PrintNodes():
-	print("Nodes \n")
-	for node in nodes:
-		print(node)
-	print("\n Graph Pointer Dictionary \n")
-	for key in graph_ptr_dict.keys():
-		print("Key: ", key)
-		print("Values: ", graph_ptr_dict[key])
-	print()
