@@ -1,0 +1,126 @@
+[gd_scene load_steps=7 format=3 uid="uid://mddtp6nl8lrm"]
+
+[ext_resource type="Texture2D" uid="uid://cb7b1ddncusaj" path="res://Sprites/Railshooter_prototype/Steam_Engine.png" id="1_2bv3w"]
+[ext_resource type="Texture2D" uid="uid://dtq4sa4yjbb2n" path="res://Sprites/Railshooter_prototype/Railtrack_sprite_with_gravel.png" id="2_8nkjy"]
+[ext_resource type="Texture2D" uid="uid://dhglt75cddkyn" path="res://Sprites/greybox_sprites/circle.png" id="4_y6q3n"]
+[ext_resource type="Texture2D" uid="uid://h6h3y81jlx82" path="res://Sprites/Railshooter_prototype/Railtrack sprite.png" id="5_1b2m0"]
+[ext_resource type="Texture2D" uid="uid://124da6r3c654" path="res://Sprites/greybox_sprites/Triangle.png" id="5_jcbkb"]
+[ext_resource type="Texture2D" uid="uid://bi7mb5pwfl1gi" path="res://Sprites/greybox_sprites/pill.png" id="6_a8qg2"]
+
+[node name="Control" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="HBoxContainer" type="HBoxContainer" parent="."]
+layout_mode = 1
+anchors_preset = 9
+anchor_bottom = 1.0
+offset_right = 100.0
+grow_vertical = 2
+
+[node name="Progress(Slider)" type="VSlider" parent="HBoxContainer"]
+layout_mode = 2
+theme_override_icons/grabber = ExtResource("1_2bv3w")
+theme_override_icons/grabber_highlight = ExtResource("1_2bv3w")
+theme_override_icons/grabber_disabled = ExtResource("1_2bv3w")
+
+[node name="HBoxContainer3" type="HBoxContainer" parent="."]
+layout_mode = 2
+offset_left = 1044.0
+offset_top = 1.0
+offset_right = 1144.0
+offset_bottom = 567.0
+grow_vertical = 2
+rotation = 1.5708
+
+[node name="TrainHealthBar" type="TextureProgressBar" parent="HBoxContainer3"]
+layout_mode = 2
+value = 100.0
+fill_mode = 3
+nine_patch_stretch = true
+stretch_margin_left = 100
+texture_under = ExtResource("2_8nkjy")
+texture_progress = ExtResource("1_2bv3w")
+
+[node name="HBoxContainer4" type="HBoxContainer" parent="."]
+layout_mode = 1
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -200.0
+offset_bottom = 200.0
+grow_horizontal = 0
+
+[node name="RailDisplay" type="TextureRect" parent="HBoxContainer4"]
+layout_mode = 2
+texture = ExtResource("4_y6q3n")
+stretch_mode = 2
+
+[node name="RailType" type="TextureRect" parent="HBoxContainer4/RailDisplay"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -20.0
+offset_top = -20.0
+offset_right = 20.0
+offset_bottom = 20.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("5_1b2m0")
+
+[node name="SpeedGuage" type="TextureRect" parent="."]
+layout_mode = 2
+offset_left = 948.0
+offset_top = 448.0
+offset_right = 1148.0
+offset_bottom = 648.0
+texture = ExtResource("5_jcbkb")
+
+[node name="GuageNeedle" type="TextureRect" parent="SpeedGuage"]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -50.0
+offset_right = 50.0
+offset_bottom = 100.0
+grow_horizontal = 2
+texture = ExtResource("6_a8qg2")
+expand_mode = 1
+
+[node name="TextureRect" type="TextureRect" parent="."]
+layout_mode = 1
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -100.0
+offset_bottom = 100.0
+grow_horizontal = 0
+texture = ExtResource("4_y6q3n")
+expand_mode = 1
+
+[node name="RailCountDisplay" type="Label" parent="TextureRect"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -23.0
+offset_top = -56.5
+offset_right = 23.0
+offset_bottom = 56.5
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_font_sizes/font_size = 80
+text = "6
+"
+horizontal_alignment = 1

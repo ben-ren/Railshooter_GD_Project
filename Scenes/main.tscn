@@ -15,7 +15,6 @@ radius = 20.0
 [node name="Node" type="Node"]
 
 [node name="TextureRect" type="TextureRect" parent="."]
-visible = false
 offset_left = -576.0
 offset_top = -589.0
 offset_right = 576.0
