@@ -1,15 +1,14 @@
-[gd_scene load_steps=9 format=3 uid="uid://mddtp6nl8lrm"]
+[gd_scene load_steps=8 format=3 uid="uid://mddtp6nl8lrm"]
 
-[ext_resource type="Texture2D" uid="uid://cb7b1ddncusaj" path="res://Sprites/Railshooter_prototype/Steam_Engine.png" id="1_2bv3w"]
 [ext_resource type="Texture2D" uid="uid://cfpyvnw1cybwf" path="res://Sprites/UI/tiny_train.png" id="1_apb1d"]
 [ext_resource type="Texture2D" uid="uid://cbm3vv5jj1att" path="res://Sprites/Railshooter_prototype/Railtrack_sprite_v2(tiled).png" id="2_6o5wm"]
-[ext_resource type="Texture2D" uid="uid://dtq4sa4yjbb2n" path="res://Sprites/Railshooter_prototype/Railtrack_sprite_with_gravel.png" id="2_8nkjy"]
-[ext_resource type="Texture2D" uid="uid://dhglt75cddkyn" path="res://Sprites/greybox_sprites/circle.png" id="4_y6q3n"]
+[ext_resource type="Texture2D" uid="uid://b7yu4y87woq3t" path="res://Sprites/UI/smoke_outline.png" id="4_jasac"]
 [ext_resource type="Texture2D" uid="uid://h6h3y81jlx82" path="res://Sprites/Railshooter_prototype/Railtrack sprite.png" id="5_1b2m0"]
+[ext_resource type="Texture2D" uid="uid://wwek7uyd3y1b" path="res://Sprites/UI/smoke_no_outline.png" id="5_ik8c7"]
 [ext_resource type="Texture2D" uid="uid://bdfndlf0aikpe" path="res://Sprites/UI/speedometer_thick_pins.png" id="7_vhvvg"]
 [ext_resource type="Texture2D" uid="uid://drmo4lfmre3rq" path="res://Sprites/UI/speedometer_needle.png" id="8_m2q05"]
 
-[node name="Control" type="Control"]
+[node name="Game_UI" type="Control"]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -26,6 +25,7 @@ grow_vertical = 2
 scale = Vector2(0.5, 1)
 
 [node name="TextureRect2" type="TextureRect" parent="ProgressBar(HBoxContainer)"]
+modulate = Color(1, 1, 1, 0.490196)
 layout_mode = 2
 size_flags_horizontal = 3
 texture = ExtResource("2_6o5wm")
@@ -39,57 +39,65 @@ offset_right = 45.5
 offset_bottom = 650.0
 
 [node name="TextureRect" type="TextureRect" parent="ProgressPos(HBoxContainer2)"]
+modulate = Color(1, 1, 1, 0.788235)
 layout_mode = 2
 size_flags_horizontal = 3
 texture = ExtResource("1_apb1d")
 expand_mode = 4
 
-[node name="HBoxContainer3" type="HBoxContainer" parent="."]
-layout_mode = 2
-offset_left = 1044.0
-offset_top = 1.0
-offset_right = 1144.0
-offset_bottom = 567.0
-grow_vertical = 2
-rotation = 1.5708
-
-[node name="TrainHealthBar" type="TextureProgressBar" parent="HBoxContainer3"]
-layout_mode = 2
-value = 100.0
-fill_mode = 3
-nine_patch_stretch = true
-stretch_margin_left = 100
-texture_under = ExtResource("2_8nkjy")
-texture_progress = ExtResource("1_2bv3w")
-
-[node name="HBoxContainer4" type="HBoxContainer" parent="."]
+[node name="FuelBar(VBoxContainer)" type="VBoxContainer" parent="."]
 layout_mode = 1
 anchors_preset = 1
 anchor_left = 1.0
 anchor_right = 1.0
-offset_left = -200.0
-offset_bottom = 200.0
+offset_left = -302.0
+offset_right = -1.99951
+offset_bottom = 50.0
 grow_horizontal = 0
+scale = Vector2(1.5, 1.5)
+pivot_offset = Vector2(300, 0)
 
-[node name="RailDisplay" type="TextureRect" parent="HBoxContainer4"]
+[node name="TextureProgressBar" type="TextureProgressBar" parent="FuelBar(VBoxContainer)"]
 layout_mode = 2
-texture = ExtResource("4_y6q3n")
-stretch_mode = 2
+value = 100.0
+fill_mode = 1
+stretch_margin_left = 300
+stretch_margin_top = 50
+texture_over = ExtResource("4_jasac")
+texture_progress = ExtResource("5_ik8c7")
 
-[node name="RailType" type="TextureRect" parent="HBoxContainer4/RailDisplay"]
+[node name="HBoxContainer4" type="HBoxContainer" parent="."]
+layout_mode = 1
+offset_right = 200.0
+offset_bottom = 200.0
+scale = Vector2(0.3, 0.3)
+pivot_offset = Vector2(100, 0)
+
+[node name="TextureRect" type="TextureRect" parent="HBoxContainer4"]
+layout_mode = 2
+texture = ExtResource("5_1b2m0")
+expand_mode = 2
+
+[node name="RailCountDisplay" type="Label" parent="HBoxContainer4/TextureRect"]
 layout_mode = 1
 anchors_preset = 8
 anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
-offset_left = -20.0
-offset_top = -20.0
-offset_right = 20.0
-offset_bottom = 20.0
+offset_left = -23.0
+offset_top = -56.5
+offset_right = 23.0
+offset_bottom = 56.5
 grow_horizontal = 2
 grow_vertical = 2
-texture = ExtResource("5_1b2m0")
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_colors/font_shadow_color = Color(0, 0, 0, 1)
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_font_sizes/font_size = 120
+text = "0
+"
+horizontal_alignment = 1
 
 [node name="SpeedGuage" type="TextureRect" parent="."]
 layout_mode = 2
@@ -114,33 +122,3 @@ grow_horizontal = 2
 grow_vertical = 0
 texture = ExtResource("8_m2q05")
 expand_mode = 1
-
-[node name="TextureRect" type="TextureRect" parent="."]
-layout_mode = 1
-anchors_preset = 1
-anchor_left = 1.0
-anchor_right = 1.0
-offset_left = -100.0
-offset_bottom = 100.0
-grow_horizontal = 0
-texture = ExtResource("4_y6q3n")
-expand_mode = 1
-
-[node name="RailCountDisplay" type="Label" parent="TextureRect"]
-layout_mode = 1
-anchors_preset = 8
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-offset_left = -23.0
-offset_top = -56.5
-offset_right = 23.0
-offset_bottom = 56.5
-grow_horizontal = 2
-grow_vertical = 2
-theme_override_colors/font_color = Color(0, 0, 0, 1)
-theme_override_font_sizes/font_size = 80
-text = "6
-"
-horizontal_alignment = 1
