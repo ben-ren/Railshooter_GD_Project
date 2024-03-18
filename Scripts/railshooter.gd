@@ -32,6 +32,9 @@ func _physics_process(delta):
 		NextTarget()
 	pass
 
+func GetSpeed():
+	return speed
+
 func GetOrigin():
 	return origin
 

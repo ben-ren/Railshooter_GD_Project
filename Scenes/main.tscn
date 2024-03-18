@@ -1,4 +1,4 @@
-[gd_scene load_steps=10 format=3 uid="uid://d34jqft0o0ckq"]
+[gd_scene load_steps=11 format=3 uid="uid://d34jqft0o0ckq"]
 
 [ext_resource type="Texture2D" uid="uid://d2mykdqwbsixh" path="res://Sprites/tilemaps/InLand.png" id="1_7syt7"]
 [ext_resource type="Script" path="res://Scripts/C_Sharp_Scripts/CameraController.cs" id="2_3nmry"]
@@ -8,6 +8,7 @@
 [ext_resource type="Script" path="res://Scripts/C_Sharp_Scripts/GunController.cs" id="5_1y7qx"]
 [ext_resource type="Texture2D" uid="uid://ck34w17yc4e2l" path="res://icon.svg" id="6_igk01"]
 [ext_resource type="Script" path="res://Scripts/C_Sharp_Scripts/ObjectDetection.cs" id="6_sq5uv"]
+[ext_resource type="PackedScene" uid="uid://mddtp6nl8lrm" path="res://Subscenes(Objects)/GameInterface.tscn" id="9_vbspq"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_qvxn7"]
 radius = 20.0
@@ -21,7 +22,18 @@ offset_right = 576.0
 offset_bottom = 324.0
 texture = ExtResource("1_7syt7")
 
+[node name="GameInterface" parent="." node_paths=PackedStringArray("train", "cam", "timer") instance=ExtResource("9_vbspq")]
+offset_left = -576.0
+offset_top = -324.0
+offset_right = -576.0
+offset_bottom = -324.0
+train = NodePath("../Railshooter")
+cam = NodePath("../Camera2D")
+timer = NodePath("../Timer")
+
 [node name="Camera2D" type="Camera2D" parent="." node_paths=PackedStringArray("targetObject")]
+position = Vector2(-576, -324)
+anchor_mode = 0
 script = ExtResource("2_3nmry")
 targetObject = NodePath("../Railshooter/LookPoint")
 panSpeed = 3.0
@@ -133,3 +145,8 @@ script = ExtResource("6_sq5uv")
 position = Vector2(10, 0)
 scale = Vector2(0.5, 0.2)
 texture = ExtResource("6_igk01")
+
+[node name="Timer" type="Timer" parent="."]
+wait_time = 100.0
+one_shot = true
+autostart = true

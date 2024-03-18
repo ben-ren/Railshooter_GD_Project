@@ -1,6 +1,7 @@
-[gd_scene load_steps=8 format=3 uid="uid://mddtp6nl8lrm"]
+[gd_scene load_steps=9 format=3 uid="uid://mddtp6nl8lrm"]
 
 [ext_resource type="Texture2D" uid="uid://cfpyvnw1cybwf" path="res://Sprites/UI/tiny_train.png" id="1_apb1d"]
+[ext_resource type="Script" path="res://Scripts/C_Sharp_Scripts/UI_Controller.cs" id="1_hyi02"]
 [ext_resource type="Texture2D" uid="uid://cbm3vv5jj1att" path="res://Sprites/Railshooter_prototype/Railtrack_sprite_v2(tiled).png" id="2_6o5wm"]
 [ext_resource type="Texture2D" uid="uid://b7yu4y87woq3t" path="res://Sprites/UI/smoke_outline.png" id="4_jasac"]
 [ext_resource type="Texture2D" uid="uid://h6h3y81jlx82" path="res://Sprites/Railshooter_prototype/Railtrack sprite.png" id="5_1b2m0"]
@@ -8,13 +9,18 @@
 [ext_resource type="Texture2D" uid="uid://bdfndlf0aikpe" path="res://Sprites/UI/speedometer_thick_pins.png" id="7_vhvvg"]
 [ext_resource type="Texture2D" uid="uid://drmo4lfmre3rq" path="res://Sprites/UI/speedometer_needle.png" id="8_m2q05"]
 
-[node name="Game_UI" type="Control"]
+[node name="GameInterface" type="Control" node_paths=PackedStringArray("fuel_bar", "tiny_train", "rail_count_display", "guage_needle")]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+script = ExtResource("1_hyi02")
+fuel_bar = NodePath("FuelBar(VBoxContainer)/TextureProgressBar")
+tiny_train = NodePath("ProgressPos(HBoxContainer2)")
+rail_count_display = NodePath("HBoxContainer4/TextureRect/RailCountDisplay")
+guage_needle = NodePath("SpeedGuage/NeedleAxel")
 
 [node name="ProgressBar(HBoxContainer)" type="HBoxContainer" parent="."]
 layout_mode = 1
@@ -38,7 +44,7 @@ offset_top = 570.0
 offset_right = 45.5
 offset_bottom = 650.0
 
-[node name="TextureRect" type="TextureRect" parent="ProgressPos(HBoxContainer2)"]
+[node name="TinyTrain(TextureRect)" type="TextureRect" parent="ProgressPos(HBoxContainer2)"]
 modulate = Color(1, 1, 1, 0.788235)
 layout_mode = 2
 size_flags_horizontal = 3
@@ -107,18 +113,19 @@ offset_right = 1150.0
 offset_bottom = 645.0
 texture = ExtResource("7_vhvvg")
 
-[node name="GuageNeedle" type="TextureRect" parent="SpeedGuage"]
-layout_mode = 1
-anchors_preset = 7
-anchor_left = 0.5
-anchor_top = 1.0
-anchor_right = 0.5
-anchor_bottom = 1.0
-offset_left = -49.0
-offset_top = -155.0
-offset_right = 51.0
-offset_bottom = 5.0
-grow_horizontal = 2
-grow_vertical = 0
+[node name="NeedleAxel" type="Control" parent="SpeedGuage"]
+anchors_preset = 0
+offset_left = 151.0
+offset_top = 160.0
+offset_right = 151.0
+offset_bottom = 160.0
+
+[node name="GuageNeedle" type="TextureRect" parent="SpeedGuage/NeedleAxel"]
+layout_mode = 0
+offset_left = -160.0
+offset_top = 50.0
+offset_right = -60.0
+offset_bottom = 210.0
+rotation = -1.5708
 texture = ExtResource("8_m2q05")
 expand_mode = 1
