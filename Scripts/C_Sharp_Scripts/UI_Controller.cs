@@ -1,18 +1,25 @@
 using Godot;
 using System;
+using System.ComponentModel.DataAnnotations;
 
 public partial class UI_Controller : Control
 {
 	[Export] Node2D train;
 	[Export] Camera2D cam;
 	[Export] TextureProgressBar fuel_bar;
-	[Export] HBoxContainer tiny_train;
+	[Export] VSlider Progression;
 	[Export] Label rail_count_display;
 	[Export] Control guage_needle;
 	[Export] Timer timer;
+	[Export] Node2D goal;
+	Vector2 endPoint;
+	Vector2 startPoint;
+
 	// Called when the node enters the scene tree for the first time.
 	public override void _Ready()
 	{
+		endPoint = goal.Position;
+		startPoint = train.Position;
 	}
 
 	// Called every frame. 'delta' is the elapsed time since the previous frame.
@@ -27,13 +34,20 @@ public partial class UI_Controller : Control
             float speed = (float)train.Call("GetSpeed");
 			SetGuageRotation(speed/2);
 		}
-		//TODO
 		//Dynamically update fuel bar using a timer
 		if(timer!=null){
 			SetFuelBar(timer.TimeLeft);
 		}
 		//Dynamically update the tiny_train's position 
+		if(goal != null){
+			Vector2 distance = endPoint - startPoint;
+			float progress = train.Position.Y / distance.Y * 100;	//Calculate train.Position.Y as a percentage of endPoint.Y
+			Progression.Value = progress;					//Set Progression.Value to percentage value
+		}
 		//Dynamically update the rail count
+		if(rail_count_display != null){
+			SetRailCountDisplay(0);	//TODO: Replace '0' with dynamic value
+		}
 	}
 
 	//Updates the position of the Interface.

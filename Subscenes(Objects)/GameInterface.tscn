@@ -1,15 +1,29 @@
-[gd_scene load_steps=9 format=3 uid="uid://mddtp6nl8lrm"]
+[gd_scene load_steps=13 format=3 uid="uid://mddtp6nl8lrm"]
 
-[ext_resource type="Texture2D" uid="uid://cfpyvnw1cybwf" path="res://Sprites/UI/tiny_train.png" id="1_apb1d"]
 [ext_resource type="Script" path="res://Scripts/C_Sharp_Scripts/UI_Controller.cs" id="1_hyi02"]
 [ext_resource type="Texture2D" uid="uid://cbm3vv5jj1att" path="res://Sprites/Railshooter_prototype/Railtrack_sprite_v2(tiled).png" id="2_6o5wm"]
+[ext_resource type="Texture2D" uid="uid://cb7b1ddncusaj" path="res://Sprites/Railshooter_prototype/Steam_Engine.png" id="2_lrmib"]
 [ext_resource type="Texture2D" uid="uid://b7yu4y87woq3t" path="res://Sprites/UI/smoke_outline.png" id="4_jasac"]
 [ext_resource type="Texture2D" uid="uid://h6h3y81jlx82" path="res://Sprites/Railshooter_prototype/Railtrack sprite.png" id="5_1b2m0"]
 [ext_resource type="Texture2D" uid="uid://wwek7uyd3y1b" path="res://Sprites/UI/smoke_no_outline.png" id="5_ik8c7"]
 [ext_resource type="Texture2D" uid="uid://bdfndlf0aikpe" path="res://Sprites/UI/speedometer_thick_pins.png" id="7_vhvvg"]
 [ext_resource type="Texture2D" uid="uid://drmo4lfmre3rq" path="res://Sprites/UI/speedometer_needle.png" id="8_m2q05"]
 
-[node name="GameInterface" type="Control" node_paths=PackedStringArray("fuel_bar", "tiny_train", "rail_count_display", "guage_needle")]
+[sub_resource type="CanvasTexture" id="CanvasTexture_tua3r"]
+diffuse_texture = ExtResource("2_lrmib")
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_wpq6w"]
+texture = ExtResource("2_6o5wm")
+texture_margin_left = 100.0
+axis_stretch_horizontal = 1
+axis_stretch_vertical = 1
+modulate_color = Color(1, 1, 1, 0.454902)
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_vj1ne"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_xtrxm"]
+
+[node name="GameInterface" type="Control" node_paths=PackedStringArray("fuel_bar", "Progression", "rail_count_display", "guage_needle")]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -18,38 +32,22 @@ grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1_hyi02")
 fuel_bar = NodePath("FuelBar(VBoxContainer)/TextureProgressBar")
-tiny_train = NodePath("ProgressPos(HBoxContainer2)")
+Progression = NodePath("VSlider")
 rail_count_display = NodePath("HBoxContainer4/TextureRect/RailCountDisplay")
 guage_needle = NodePath("SpeedGuage/NeedleAxel")
 
-[node name="ProgressBar(HBoxContainer)" type="HBoxContainer" parent="."]
-layout_mode = 1
-anchors_preset = 9
-anchor_bottom = 1.0
-offset_right = 53.0
-grow_vertical = 2
-scale = Vector2(0.5, 1)
-
-[node name="TextureRect2" type="TextureRect" parent="ProgressBar(HBoxContainer)"]
-modulate = Color(1, 1, 1, 0.490196)
+[node name="VSlider" type="VSlider" parent="."]
+modulate = Color(1, 1, 1, 0.803922)
 layout_mode = 2
-size_flags_horizontal = 3
-texture = ExtResource("2_6o5wm")
-stretch_mode = 1
-
-[node name="ProgressPos(HBoxContainer2)" type="HBoxContainer" parent="."]
-layout_mode = 2
-offset_left = 5.5
-offset_top = 570.0
-offset_right = 45.5
-offset_bottom = 650.0
-
-[node name="TinyTrain(TextureRect)" type="TextureRect" parent="ProgressPos(HBoxContainer2)"]
-modulate = Color(1, 1, 1, 0.788235)
-layout_mode = 2
-size_flags_horizontal = 3
-texture = ExtResource("1_apb1d")
-expand_mode = 4
+offset_top = -27.0
+offset_right = 100.0
+offset_bottom = 2223.0
+scale = Vector2(0.3, 0.3)
+theme_override_icons/grabber = SubResource("CanvasTexture_tua3r")
+theme_override_styles/slider = SubResource("StyleBoxTexture_wpq6w")
+theme_override_styles/grabber_area = SubResource("StyleBoxEmpty_vj1ne")
+theme_override_styles/grabber_area_highlight = SubResource("StyleBoxEmpty_xtrxm")
+scrollable = false
 
 [node name="FuelBar(VBoxContainer)" type="VBoxContainer" parent="."]
 layout_mode = 1

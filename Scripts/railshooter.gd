@@ -15,7 +15,6 @@ var graph_ptr_dict
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	selectedTrackIndex = 0 # Resets the track select to default left most track
-	speed *= 0.001
 	csharp_script = get_node("../PathingTree")
 	nodes = csharp_script.GetNodes()
 	graph_ptr_dict = csharp_script.GetGraphPtrDict()

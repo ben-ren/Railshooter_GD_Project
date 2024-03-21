@@ -22,7 +22,7 @@ offset_right = 576.0
 offset_bottom = 324.0
 texture = ExtResource("1_7syt7")
 
-[node name="GameInterface" parent="." node_paths=PackedStringArray("train", "cam", "timer") instance=ExtResource("9_vbspq")]
+[node name="GameInterface" parent="." node_paths=PackedStringArray("train", "cam", "timer", "goal") instance=ExtResource("9_vbspq")]
 offset_left = -576.0
 offset_top = -324.0
 offset_right = -576.0
@@ -30,6 +30,7 @@ offset_bottom = -324.0
 train = NodePath("../Railshooter")
 cam = NodePath("../Camera2D")
 timer = NodePath("../Timer")
+goal = NodePath("../EndPoint")
 
 [node name="Camera2D" type="Camera2D" parent="." node_paths=PackedStringArray("targetObject")]
 position = Vector2(-576, -324)
@@ -124,7 +125,7 @@ endPoint = NodePath("../Area2D6")
 [node name="Railshooter" parent="." node_paths=PackedStringArray("origin", "target") instance=ExtResource("2_ilv08")]
 origin = NodePath("../PathingTree/Area2D")
 target = NodePath("../PathingTree/Area2D2")
-speed = 100000.0
+speed = 100.0
 accel = 5.0
 
 [node name="LookPoint" type="Node2D" parent="Railshooter"]
@@ -150,3 +151,6 @@ texture = ExtResource("6_igk01")
 wait_time = 100.0
 one_shot = true
 autostart = true
+
+[node name="EndPoint" type="Node2D" parent="."]
+position = Vector2(0, -1000)
