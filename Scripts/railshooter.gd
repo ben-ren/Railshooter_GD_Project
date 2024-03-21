@@ -7,6 +7,7 @@ var MathH = MathHelper.new()
 @export var target : Node2D;
 @export var speed : float;
 @export var accel : float;
+@export var railCount : int;
 var selectedTrackIndex
 var csharp_script
 var nodes
@@ -30,6 +31,12 @@ func _physics_process(delta):
 	if(position.distance_to(target.position) < 1.0):
 		NextTarget()
 	pass
+
+func GetRailCount():
+	return railCount;
+
+func SetRailCount(num):
+	railCount = num
 
 func GetSpeed():
 	return speed

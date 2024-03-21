@@ -17,6 +17,7 @@ public partial class PathingTree : Node2D
 	private RenderRails render;
 	public Node2D generatedNode;
 	public bool graphUpdated = false;
+	int railCount;
 
 	public override void _Ready(){
 		render = new();
@@ -26,9 +27,15 @@ public partial class PathingTree : Node2D
 	public override void _Process(double delta)
 	{
 		PositionLogic();
-		//Shoots rail on left click. If ray ISN'T colliding with TargetNode
+		//Shoots rail on left click. If ray ISN'T colliding with TargetNode && the railCount is greater than 0
 		if(Input.IsActionJustPressed("left_click") && Railshooter.HasMethod("TrainController")){
-			ShootRail(range);
+			int num = (int)Railshooter.Call("GetRailCount");
+			if(num > 0){
+				ShootRail(range);
+				num--;
+				Railshooter.Call("SetRailCount",num);
+			}
+			
 		//null-conditional operator ('?'). It returns an assigned default boolean value when the input variable is null. 
 		//Example here uses 'ray.GetCollidedObject()?' if this returns null then the following section '?? false' will default that conditional to false.
 		//Delete's rail on right click 

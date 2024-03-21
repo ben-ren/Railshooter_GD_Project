@@ -46,7 +46,8 @@ public partial class UI_Controller : Control
 		}
 		//Dynamically update the rail count
 		if(rail_count_display != null){
-			SetRailCountDisplay(0);	//TODO: Replace '0' with dynamic value
+			int num = (int)train.Call("GetRailCount");
+			SetRailCountDisplay(num);	//TODO: Replace '0' with dynamic value
 		}
 	}
 

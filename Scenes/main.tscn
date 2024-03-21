@@ -127,6 +127,7 @@ origin = NodePath("../PathingTree/Area2D")
 target = NodePath("../PathingTree/Area2D2")
 speed = 100.0
 accel = 5.0
+railCount = 6
 
 [node name="LookPoint" type="Node2D" parent="Railshooter"]
 position = Vector2(0, -100)
