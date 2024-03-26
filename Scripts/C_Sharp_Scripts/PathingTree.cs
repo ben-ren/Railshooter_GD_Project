@@ -13,6 +13,7 @@ public partial class PathingTree : Node2D
 	[Export] ObjectDetection ray;
 	float range;
 	Texture obj = (Texture)GD.Load("res://Sprites/Railshooter_prototype/Railtrack_sprite_v2(tiled)_rot90.png");	//Used to load rail sprite texture
+	Texture2D curve_texture = (Texture2D)GD.Load("res://Sprites/Railshooter_prototype/trackswitch_curve_transparent.png");
 	private Vector2 mousePosition;
 	private RenderRails render;
 	public Node2D generatedNode;
@@ -116,6 +117,13 @@ public partial class PathingTree : Node2D
 		CollisionShape2D newCol = new();
 		newArea.AddChild(newCol);
 		newCol.Shape = new CircleShape2D();
+
+		//Generate Sprite2D as child of Area2D. Set sprite to trackswitch_curve
+		Sprite2D newSprite = new();
+		newArea.AddChild(newSprite);
+		newSprite.Texture = curve_texture;
+		newSprite.Scale = new Vector2(0.3f, 0.3f);
+		newSprite.ZIndex = -1;
 
 		nodes.Add(newArea);		//Adds the newly generated Line2D node to the 'nodes' Godot Array
 		return newArea;
