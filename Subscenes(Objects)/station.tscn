@@ -1,8 +1,18 @@
-[gd_scene load_steps=2 format=3 uid="uid://jf6l6ec8awek"]
+[gd_scene load_steps=3 format=3 uid="uid://jf6l6ec8awek"]
 
-[ext_resource type="Texture2D" uid="uid://domlpcnav8qfp" path="res://Sprites/Railshooter_prototype/Railtrack_segment_sprite.png" id="1_g3j20"]
+[ext_resource type="Texture2D" uid="uid://dg0gkvrlhqcw3" path="res://Sprites/Railshooter_prototype/station.png" id="1_sfjh8"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_pc3t1"]
 
 [node name="Station" type="Node2D"]
+scale = Vector2(0.3, 0.3)
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
-texture = ExtResource("1_g3j20")
+position = Vector2(0, -200)
+texture = ExtResource("1_sfjh8")
+
+[node name="Area2D" type="Area2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
+scale = Vector2(5, 1)
+shape = SubResource("RectangleShape2D_pc3t1")
