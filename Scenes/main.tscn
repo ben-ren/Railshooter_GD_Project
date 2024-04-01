@@ -25,7 +25,7 @@ offset_right = 576.0
 offset_bottom = 324.0
 texture = ExtResource("1_7syt7")
 
-[node name="GameInterface" parent="." node_paths=PackedStringArray("train", "cam", "timer") instance=ExtResource("9_vbspq")]
+[node name="GameInterface" parent="." node_paths=PackedStringArray("train", "cam", "timer", "goal") instance=ExtResource("9_vbspq")]
 offset_left = -576.0
 offset_top = -324.0
 offset_right = -576.0
@@ -33,6 +33,7 @@ offset_bottom = -324.0
 train = NodePath("../Railshooter")
 cam = NodePath("../Camera2D")
 timer = NodePath("../Timer")
+goal = NodePath("../Station")
 
 [node name="Camera2D" type="Camera2D" parent="." node_paths=PackedStringArray("targetObject")]
 position = Vector2(-576, -324)

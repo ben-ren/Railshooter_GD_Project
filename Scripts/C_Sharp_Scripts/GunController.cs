@@ -9,6 +9,8 @@ public partial class GunController : Node2D
 	float angleDeg;
 
 	Node2D parentNode;
+	GDScript _script;
+	bool crashed;
 
     public override void _Ready()
     {
@@ -18,8 +20,11 @@ public partial class GunController : Node2D
     // Called every frame. 'delta' is the elapsed time since the previous frame.
     public override void _Process(double delta)
 	{
-		mousePos = GetGlobalMousePosition();
-		RotateTowards(mousePos);
+		crashed = (bool)parentNode.Call("GetCrashed");
+		if(!crashed){
+			mousePos = GetGlobalMousePosition();
+			RotateTowards(mousePos);
+		}
 	}
 
 	void RotateTowards(Vector2 targetPos){

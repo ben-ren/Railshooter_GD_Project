@@ -25,6 +25,16 @@ public partial class UI_Controller : Control
 	// Called every frame. 'delta' is the elapsed time since the previous frame.
 	public override void _Process(double delta)
 	{
+		OutOfFuelCheck();
+		bool crashed = (bool)train.Call("GetCrashed");
+		if(!crashed){
+			SetDisplayData();
+		}else{
+			SetGuageRotation(0);
+		}
+	}
+
+	void SetDisplayData(){
 		//Dynamically updates Interface relative to Camera position
 		if(cam!=null){
 			SetInterfacePosition(cam.Position);
@@ -48,6 +58,13 @@ public partial class UI_Controller : Control
 		if(rail_count_display != null){
 			int num = (int)train.Call("GetRailCount");
 			SetRailCountDisplay(num);	//TODO: Replace '0' with dynamic value
+		}
+	}
+
+	//Set crashed state if timer.TimeLeft = 0
+	void OutOfFuelCheck(){
+		if(timer.TimeLeft == 0.0d){
+			train.Call("SetCrashed", true);
 		}
 	}
 

@@ -12,6 +12,7 @@ var selectedTrackIndex
 var csharp_script
 var nodes
 var graph_ptr_dict
+@export var crashed : bool;
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
@@ -22,10 +23,11 @@ func _ready():
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _physics_process(delta):
-	UpdateRailLists()
-	MoveTo(target, delta)
-	TrainController()
-	MathH.rotate_towards(self, target.position, speed, get_process_delta_time() * .05)
+	if(!crashed):
+		UpdateRailLists()
+		MoveTo(target, delta)
+		TrainController()
+		MathH.rotate_towards(self, target.position, speed, get_process_delta_time() * .05)
 	
 	# Sets after reaching target sets next target node
 	if(position.distance_to(target.position) < 1.0):
@@ -37,6 +39,12 @@ func GetRailCount():
 
 func SetRailCount(num):
 	railCount = num
+
+func SetCrashed(state):
+	crashed = state
+
+func GetCrashed():
+	return crashed
 
 func GetSpeed():
 	return speed
@@ -73,6 +81,10 @@ func NextTarget():
 			origin = target # set origin as old target
 			target = nodes[newIndex] # set new target
 			selectedTrackIndex = 0
+		else:
+			# temporary array is either empty or null
+			print("temp Array empty or null")
+			SetCrashed(true)
 	else:
 		print("current target not in node list")
 
