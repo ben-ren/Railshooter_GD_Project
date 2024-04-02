@@ -30,8 +30,9 @@ public partial class PathingTree : Node2D
 		PositionLogic();
 		//Shoots rail on left click. If ray ISN'T colliding with TargetNode && the railCount is greater than 0
 		if(Input.IsActionJustPressed("left_click") && Railshooter.HasMethod("TrainController")){
+			bool crashed = (bool)Railshooter.Call("GetCrashed");
 			int num = (int)Railshooter.Call("GetRailCount");
-			if(num > 0){
+			if(num > 0 && !crashed){
 				ShootRail(range);
 				num--;
 				Railshooter.Call("SetRailCount",num);
