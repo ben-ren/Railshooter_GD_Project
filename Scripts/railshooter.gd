@@ -12,7 +12,8 @@ var selectedTrackIndex
 var csharp_script
 var nodes
 var graph_ptr_dict
-@export var crashed : bool;
+var crashed : bool;
+@export var ray : Node2D;
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
@@ -54,6 +55,9 @@ func GetOrigin():
 
 func GetTarget():
 	return target
+
+func GetRay():
+	return ray;
 
 # Updates the nodes & graph_ptr_dicts lists when changes are detected in original data.
 func UpdateRailLists():

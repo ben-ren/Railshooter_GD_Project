@@ -1,13 +1,18 @@
-[gd_scene load_steps=4 format=3 uid="uid://bssxw8rsligum"]
+[gd_scene load_steps=7 format=3 uid="uid://bssxw8rsligum"]
 
 [ext_resource type="Texture2D" uid="uid://cb7b1ddncusaj" path="res://Sprites/Railshooter_prototype/Steam_Engine.png" id="1_5pj76"]
 [ext_resource type="Script" path="res://Scripts/railshooter.gd" id="1_jxcqr"]
+[ext_resource type="Script" path="res://Scripts/C_Sharp_Scripts/GunController.cs" id="3_tqmup"]
+[ext_resource type="Script" path="res://Scripts/C_Sharp_Scripts/ObjectDetection.cs" id="4_5s3ua"]
+[ext_resource type="Texture2D" uid="uid://ck34w17yc4e2l" path="res://icon.svg" id="5_87vgq"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_tr1il"]
 size = Vector2(10, 30)
 
-[node name="Railshooter" type="Node2D"]
+[node name="Railshooter" type="Node2D" node_paths=PackedStringArray("ray")]
+z_index = 4
 script = ExtResource("1_jxcqr")
+ray = NodePath("Railgun/RayCast2D")
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
 scale = Vector2(0.4, 0.4)
@@ -21,3 +26,23 @@ collision_mask = 2
 position = Vector2(0, 6)
 scale = Vector2(4, 4)
 shape = SubResource("RectangleShape2D_tr1il")
+
+[node name="LookPoint" type="Node2D" parent="."]
+position = Vector2(0, -100)
+
+[node name="Railgun" type="Node2D" parent="."]
+rotation = -1.5708
+script = ExtResource("3_tqmup")
+
+[node name="RayCast2D" type="RayCast2D" parent="Railgun"]
+z_index = 3
+position = Vector2(1, 0)
+rotation = 1.5708
+target_position = Vector2(0, -200)
+collide_with_areas = true
+script = ExtResource("4_5s3ua")
+
+[node name="Sprite2D" type="Sprite2D" parent="Railgun"]
+position = Vector2(10, 0)
+scale = Vector2(0.5, 0.2)
+texture = ExtResource("5_87vgq")

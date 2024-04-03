@@ -23,10 +23,12 @@ public partial class PathingTree : Node2D
 	public override void _Ready(){
 		render = new();
 		range = RangeLimit;
+		ray = (ObjectDetection)Railshooter.Call("GetRay");
 	}
 
 	public override void _Process(double delta)
 	{
+		SetRaycastRange();
 		PositionLogic();
 		//Shoots rail on left click. If ray ISN'T colliding with TargetNode && the railCount is greater than 0
 		if(Input.IsActionJustPressed("left_click") && Railshooter.HasMethod("TrainController")){
@@ -37,13 +39,14 @@ public partial class PathingTree : Node2D
 				num--;
 				Railshooter.Call("SetRailCount",num);
 			}
-			
+			ConnectToStation();
 		//null-conditional operator ('?'). It returns an assigned default boolean value when the input variable is null. 
 		//Example here uses 'ray.GetCollidedObject()?' if this returns null then the following section '?? false' will default that conditional to false.
 		//Delete's rail on right click 
 		} else if(Input.IsActionJustPressed("right_click") && (ray.GetCollidedObject()?.IsInGroup("rail") ?? false) ){
 			RemoveRail(ray.GetCollidedObject());
 		}
+		
 	}
 
 	public Godot.Collections.Array<Node2D> GetNodes(){
@@ -106,6 +109,19 @@ public partial class PathingTree : Node2D
 		}
 		UpdateGraph(GetTarget(), GetGeneratedNode());
 		render.DrawRailLines(this, GetTarget(), GetGeneratedNode());	//renders rail sprites using Line2D nodes
+	}
+
+	//TODO: Connects railway to station
+	void ConnectToStation(){
+		if(ray.GetCollidedObject()?.IsInGroup("station") ?? false){
+			Node2D station = ray.GetCollidedObject();
+			GD.Print("Station detected: ", ray.GetCollidedObject());
+
+			//generate node at station center point. Don't draw rail.
+			Vector2 station_center_point = station.Position + new Vector2(0, -70);
+			Node2D station_center = GenerateNode(station_center_point);
+			UpdateGraph(GetGeneratedNode(), station_center);
+		}
 	}
 
 	//Create a new Node2D in scene at target location. https://www.youtube.com/watch?v=yxin2ScRnMU
@@ -171,7 +187,12 @@ public partial class PathingTree : Node2D
 		rail.QueueFree();	//Remove Rail object (Line2D) from scene.
 		RemoveFromGraph(railStart, railEnd);	//Update graph to remove relation between start and end points of selected rail
 
+		//Increase rail count by 1
+		int num = (int)Railshooter.Call("GetRailCount");
+		Railshooter.Call("SetRailCount", num + 1);
+
 		//TODO: Delete the attached TargetNode(endPoint) IF after Line2D removal it becomes a loose node
+		//if graph_ptr_dict[railend].isEmpty {railEnd.Free}
 	}
 
 	//Remove's the relation of the input Node2D's from the graph_ptr_dict.
@@ -181,5 +202,10 @@ public partial class PathingTree : Node2D
 		int endInt = nodes.IndexOf(end);		//Find end index
 		//Find start key in graph and Remove end index from start key's values
 		graph_ptr_dict[startInt].Remove(endInt);
+	}
+
+	//Update's the Raycast2D's relative TargetPosition based on the PathingTree's Range limit variable
+	public void SetRaycastRange(){
+		ray.TargetPosition = new Vector2(0, -RangeLimit);
 	}
 }
