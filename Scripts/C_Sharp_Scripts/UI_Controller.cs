@@ -20,6 +20,7 @@ public partial class UI_Controller : Control
 	{
 		endPoint = goal.Position;
 		startPoint = train.Position;
+		TotalFuelCapacity(timer.WaitTime);
 	}
 
 	// Called every frame. 'delta' is the elapsed time since the previous frame.
@@ -31,6 +32,10 @@ public partial class UI_Controller : Control
 			SetDisplayData();
 		}else{
 			SetGuageRotation(0);
+		}
+		bool refuel = (bool)train.Call("GetFuelState");
+		if(refuel){
+			RefuelTrain(5);
 		}
 	}
 
@@ -76,6 +81,21 @@ public partial class UI_Controller : Control
 	//Updates the fuel bar display to reflect the input value
 	public void SetFuelBar(double val){
 		fuel_bar.Value = val;
+	}
+
+	//Increases the timer value by the input amount
+	public void RefuelTrain(double val){
+		FillFuelTank(val);
+		train.Call("SetFuelState", false);
+	}
+
+	public void TotalFuelCapacity(double val){
+		fuel_bar.MaxValue = val;
+		fuel_bar.Step = val/1000;
+	}
+
+	public void FillFuelTank(double val){
+		fuel_bar.Value = Math.Clamp(fuel_bar.Value + val, fuel_bar.MinValue, fuel_bar.MaxValue);
 	}
 
 	//Get's the current fuel bar value

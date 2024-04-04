@@ -13,6 +13,7 @@ var csharp_script
 var nodes
 var graph_ptr_dict
 var crashed : bool;
+var refuel: bool;
 @export var ray : Node2D;
 
 # Called when the node enters the scene tree for the first time.
@@ -29,6 +30,8 @@ func _physics_process(delta):
 		MoveTo(target, delta)
 		TrainController()
 		MathH.rotate_towards(self, target.position, speed, get_process_delta_time() * .05)
+	
+	# Check's for train object's collision state
 	
 	# Sets after reaching target sets next target node
 	if(position.distance_to(target.position) < 1.0):
@@ -57,7 +60,13 @@ func GetTarget():
 	return target
 
 func GetRay():
-	return ray;
+	return ray
+
+func GetFuelState():
+	return refuel
+
+func SetFuelState(state):
+	refuel = state
 
 # Updates the nodes & graph_ptr_dicts lists when changes are detected in original data.
 func UpdateRailLists():
@@ -102,3 +111,15 @@ func TrainController():
 	elif( Input.is_action_just_pressed("Axis_X-") ):
 		selectedTrackIndex -= 1
 	pass
+
+func _on_area_2d_body_entered(body):
+	print(body)
+	if body.is_in_group("fuel"):
+		print("Refuel")
+		SetFuelState(true)
+	elif body.is_in_group("obstacles"):
+		print("Crashed")
+		SetCrashed(true)
+	else:
+		print("")
+	pass # Replace with function body.
