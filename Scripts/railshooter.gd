@@ -14,6 +14,7 @@ var nodes
 var graph_ptr_dict
 var crashed : bool;
 var refuel: bool;
+var fuel_size;
 @export var ray : Node2D;
 
 # Called when the node enters the scene tree for the first time.
@@ -112,14 +113,16 @@ func TrainController():
 		selectedTrackIndex -= 1
 	pass
 
-func _on_area_2d_body_entered(body):
-	print(body)
-	if body.is_in_group("fuel"):
-		print("Refuel")
+func _on_area_2d_area_entered(area):
+	if area.is_in_group("fuel"):
 		SetFuelState(true)
-	elif body.is_in_group("obstacles"):
-		print("Crashed")
+		fuel_size = area.get_fuel_size();
+		area.remove_from_group("fuel")
+	elif area.is_in_group("obstacles"):
 		SetCrashed(true)
 	else:
 		print("")
 	pass # Replace with function body.
+
+func GetFuelSize():
+	return fuel_size

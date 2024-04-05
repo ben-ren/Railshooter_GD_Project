@@ -35,7 +35,8 @@ public partial class UI_Controller : Control
 		}
 		bool refuel = (bool)train.Call("GetFuelState");
 		if(refuel){
-			RefuelTrain(5);
+			double percent = (double)train.Call("GetFuelSize");
+			RefuelTrain(percent);
 		}
 	}
 
@@ -84,18 +85,16 @@ public partial class UI_Controller : Control
 	}
 
 	//Increases the timer value by the input amount
-	public void RefuelTrain(double val){
-		FillFuelTank(val);
+	public void RefuelTrain(double percent){
+		double val = timer.TimeLeft + timer.WaitTime * (percent/100);
+		timer.WaitTime = Math.Clamp(val, fuel_bar.MinValue, fuel_bar.MaxValue);
+		timer.Start();
 		train.Call("SetFuelState", false);
 	}
 
 	public void TotalFuelCapacity(double val){
 		fuel_bar.MaxValue = val;
 		fuel_bar.Step = val/1000;
-	}
-
-	public void FillFuelTank(double val){
-		fuel_bar.Value = Math.Clamp(fuel_bar.Value + val, fuel_bar.MinValue, fuel_bar.MaxValue);
 	}
 
 	//Get's the current fuel bar value

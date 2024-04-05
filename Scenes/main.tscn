@@ -1,4 +1,4 @@
-[gd_scene load_steps=12 format=3 uid="uid://d34jqft0o0ckq"]
+[gd_scene load_steps=11 format=3 uid="uid://d34jqft0o0ckq"]
 
 [ext_resource type="Texture2D" uid="uid://d2mykdqwbsixh" path="res://Sprites/tilemaps/InLand.png" id="1_7syt7"]
 [ext_resource type="Script" path="res://Scripts/C_Sharp_Scripts/CameraController.cs" id="2_3nmry"]
@@ -6,15 +6,12 @@
 [ext_resource type="PackedScene" uid="uid://d1t1ppeoujr0r" path="res://Subscenes(Objects)/Rail_Segment.tscn" id="3_lnqdx"]
 [ext_resource type="Script" path="res://Scripts/C_Sharp_Scripts/PathingTree.cs" id="3_wgt8d"]
 [ext_resource type="Texture2D" uid="uid://bepmsan5asw4r" path="res://Sprites/Railshooter_prototype/trackswitch_curve_transparent.png" id="5_3i6bx"]
-[ext_resource type="Texture2D" uid="uid://bi7mb5pwfl1gi" path="res://Sprites/greybox_sprites/pill.png" id="9_vboyg"]
+[ext_resource type="PackedScene" uid="uid://dkwtegjqtr4om" path="res://Subscenes(Objects)/fuel_pickup.tscn" id="9_t7w02"]
 [ext_resource type="PackedScene" uid="uid://mddtp6nl8lrm" path="res://Subscenes(Objects)/GameInterface.tscn" id="9_vbspq"]
 [ext_resource type="PackedScene" uid="uid://jf6l6ec8awek" path="res://Subscenes(Objects)/station.tscn" id="11_5p1te"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_qvxn7"]
 radius = 20.0
-
-[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_qap20"]
-height = 38.0
 
 [node name="Node" type="Node"]
 
@@ -166,17 +163,4 @@ autostart = true
 [node name="Station" parent="." instance=ExtResource("11_5p1te")]
 position = Vector2(0, -900)
 
-[node name="FuelPickup" type="Node2D" parent="." groups=["fuel"]]
-position = Vector2(0, -437)
-
-[node name="Sprite2D" type="Sprite2D" parent="FuelPickup"]
-scale = Vector2(0.2, 0.2)
-texture = ExtResource("9_vboyg")
-
-[node name="Area2D" type="Area2D" parent="FuelPickup"]
-input_pickable = false
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="FuelPickup/Area2D"]
-light_mask = 4
-visibility_layer = 4
-shape = SubResource("CapsuleShape2D_qap20")
+[node name="FuelPickup" parent="." instance=ExtResource("9_t7w02")]
