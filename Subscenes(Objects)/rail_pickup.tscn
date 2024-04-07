@@ -1,0 +1,19 @@
+[gd_scene load_steps=4 format=3 uid="uid://c4jxsgs6etv8"]
+
+[ext_resource type="Script" path="res://Scripts/rail_pickup.gd" id="1_0ohuv"]
+[ext_resource type="Texture2D" uid="uid://h6h3y81jlx82" path="res://Sprites/Railshooter_prototype/Railtrack sprite.png" id="1_vj7ne"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_jq66m"]
+size = Vector2(28, 25)
+
+[node name="RailPickup" type="Area2D" groups=["rail_pickup"]]
+script = ExtResource("1_0ohuv")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+modulate = Color(0.784314, 0, 1, 0.831373)
+scale = Vector2(0.3, 0.3)
+texture = ExtResource("1_vj7ne")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(0, -0.5)
+shape = SubResource("RectangleShape2D_jq66m")

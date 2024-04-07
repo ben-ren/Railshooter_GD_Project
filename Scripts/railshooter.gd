@@ -114,14 +114,23 @@ func TrainController():
 	pass
 
 func _on_area_2d_area_entered(area):
+	# Check's if pickup collision is fuel pickup
 	if area.is_in_group("fuel"):
+		# Set's fuel state for once off trigger
 		SetFuelState(true)
 		fuel_size = area.get_fuel_size();
-		area.remove_from_group("fuel")
+		area.queue_free()
+	# Check's if pickup collider is a rail pickup item
+	elif area.is_in_group("rail_pickup"):
+		# increases rail count by designated amount
+		SetRailCount( GetRailCount() + area.get_rail_size() );
+		area.queue_free()
+	# checks if collided area is in group obstacles
 	elif area.is_in_group("obstacles"):
+		# trigger's crash state for train
 		SetCrashed(true)
 	else:
-		print("")
+		print()
 	pass # Replace with function body.
 
 func GetFuelSize():

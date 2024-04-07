@@ -1,4 +1,4 @@
-[gd_scene load_steps=11 format=3 uid="uid://d34jqft0o0ckq"]
+[gd_scene load_steps=12 format=3 uid="uid://d34jqft0o0ckq"]
 
 [ext_resource type="Texture2D" uid="uid://d2mykdqwbsixh" path="res://Sprites/tilemaps/InLand.png" id="1_7syt7"]
 [ext_resource type="Script" path="res://Scripts/C_Sharp_Scripts/CameraController.cs" id="2_3nmry"]
@@ -8,6 +8,7 @@
 [ext_resource type="Texture2D" uid="uid://bepmsan5asw4r" path="res://Sprites/Railshooter_prototype/trackswitch_curve_transparent.png" id="5_3i6bx"]
 [ext_resource type="PackedScene" uid="uid://dkwtegjqtr4om" path="res://Subscenes(Objects)/fuel_pickup.tscn" id="9_t7w02"]
 [ext_resource type="PackedScene" uid="uid://mddtp6nl8lrm" path="res://Subscenes(Objects)/GameInterface.tscn" id="9_vbspq"]
+[ext_resource type="PackedScene" uid="uid://c4jxsgs6etv8" path="res://Subscenes(Objects)/rail_pickup.tscn" id="10_kduri"]
 [ext_resource type="PackedScene" uid="uid://jf6l6ec8awek" path="res://Subscenes(Objects)/station.tscn" id="11_5p1te"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_qvxn7"]
@@ -164,3 +165,8 @@ autostart = true
 position = Vector2(0, -900)
 
 [node name="FuelPickup" parent="." instance=ExtResource("9_t7w02")]
+position = Vector2(0, -500)
+
+[node name="RailPickup" parent="." instance=ExtResource("10_kduri")]
+position = Vector2(0, -442)
+rail_size = 1
