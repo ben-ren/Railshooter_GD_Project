@@ -1,6 +1,7 @@
 using Godot;
 using System;
 using System.ComponentModel.DataAnnotations;
+using System.Drawing;
 
 public partial class UI_Controller : Control
 {
@@ -12,6 +13,7 @@ public partial class UI_Controller : Control
 	[Export] Control guage_needle;
 	[Export] Timer timer;
 	[Export] Node2D goal;
+	[Export] HBoxContainer arrow;
 	Vector2 endPoint;
 	Vector2 startPoint;
 
@@ -37,6 +39,10 @@ public partial class UI_Controller : Control
 		if(refuel){
 			double percent = (double)train.Call("GetFuelSize");
 			RefuelTrain(percent);
+		}
+		if((bool)train.Call("GetTargetSwitched") && !crashed){
+			//Change arrow sprite rotation
+			RotateDirectionalArrow(arrow);
 		}
 	}
 
@@ -113,13 +119,34 @@ public partial class UI_Controller : Control
 		return int.Parse(rail_count_display.Text);
 	}
 
+	//Set's the rotation of the guage needle in degrees
 	public void SetGuageRotation(float degrees){
 		//double radians = MathF.PI/180 * degrees;
 		//double degrees = MathF.PI/180 * radians;
 		guage_needle.RotationDegrees = degrees;
 	}
 	
+	//returns the current rotation degrees of the guage needle
 	public float GetGuageRotation(){
 		return guage_needle.RotationDegrees;
+	}
+
+	//Rotate's the directional arrow node to point parallel to the selected rail
+	public void RotateDirectionalArrow(HBoxContainer arrow){
+		//Get selected origin and target from train node 
+		Node2D nextNode = (Node2D)train.Call("GetNextNode");
+		Node2D target = (Node2D)train.Call("GetTarget");
+		GD.Print(nextNode);
+		if(nextNode != null){
+			arrow.Visible = true;
+			//calculate directional vector
+			Vector2 direction = nextNode.Position - target.Position;
+			//Set arrow rotation
+			float angle = Mathf.Atan2(direction.Y, direction.X);
+			float degrees = Mathf.RadToDeg(angle);
+			arrow.RotationDegrees = degrees + 90;
+		}
+		//Reset TargetSwitched flag
+		train.Call("SetTargetSwitched", false);
 	}
 }

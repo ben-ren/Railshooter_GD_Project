@@ -1,4 +1,4 @@
-[gd_scene load_steps=13 format=3 uid="uid://mddtp6nl8lrm"]
+[gd_scene load_steps=14 format=3 uid="uid://mddtp6nl8lrm"]
 
 [ext_resource type="Script" path="res://Scripts/C_Sharp_Scripts/UI_Controller.cs" id="1_hyi02"]
 [ext_resource type="Texture2D" uid="uid://cbm3vv5jj1att" path="res://Sprites/Railshooter_prototype/Railtrack_sprite_v2(tiled).png" id="2_6o5wm"]
@@ -8,6 +8,7 @@
 [ext_resource type="Texture2D" uid="uid://wwek7uyd3y1b" path="res://Sprites/UI/smoke_no_outline.png" id="5_ik8c7"]
 [ext_resource type="Texture2D" uid="uid://bdfndlf0aikpe" path="res://Sprites/UI/speedometer_thick_pins.png" id="7_vhvvg"]
 [ext_resource type="Texture2D" uid="uid://drmo4lfmre3rq" path="res://Sprites/UI/speedometer_needle.png" id="8_m2q05"]
+[ext_resource type="Texture2D" uid="uid://124da6r3c654" path="res://Sprites/greybox_sprites/Triangle.png" id="9_pplcx"]
 
 [sub_resource type="CanvasTexture" id="CanvasTexture_tua3r"]
 diffuse_texture = ExtResource("2_lrmib")
@@ -23,7 +24,7 @@ modulate_color = Color(1, 1, 1, 0.454902)
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_xtrxm"]
 
-[node name="GameInterface" type="Control" node_paths=PackedStringArray("fuel_bar", "Progression", "rail_count_display", "guage_needle")]
+[node name="GameInterface" type="Control" node_paths=PackedStringArray("fuel_bar", "Progression", "rail_count_display", "guage_needle", "arrow")]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -35,6 +36,7 @@ fuel_bar = NodePath("FuelBar(VBoxContainer)/TextureProgressBar")
 Progression = NodePath("VSlider")
 rail_count_display = NodePath("HBoxContainer4/TextureRect/RailCountDisplay")
 guage_needle = NodePath("SpeedGuage/NeedleAxel")
+arrow = NodePath("HBoxContainer")
 
 [node name="VSlider" type="VSlider" parent="."]
 modulate = Color(1, 1, 1, 0.803922)
@@ -127,3 +129,18 @@ offset_bottom = 210.0
 rotation = -1.5708
 texture = ExtResource("8_m2q05")
 expand_mode = 1
+
+[node name="HBoxContainer" type="HBoxContainer" parent="."]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_top = 50.0
+offset_bottom = 50.0
+grow_horizontal = 2
+
+[node name="Sprite2D" type="Sprite2D" parent="HBoxContainer"]
+modulate = Color(1, 1, 1, 0.517647)
+z_index = 5
+scale = Vector2(0.3, 0.3)
+texture = ExtResource("9_pplcx")

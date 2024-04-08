@@ -36,6 +36,7 @@ public partial class PathingTree : Node2D
 			int num = (int)Railshooter.Call("GetRailCount");
 			if(num > 0 && !crashed){
 				ShootRail(range);
+				Railshooter.Call("SetTargetSwitched", true);
 				num--;
 				Railshooter.Call("SetRailCount",num);
 			}

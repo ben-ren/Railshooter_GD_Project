@@ -9,11 +9,13 @@ var MathH = MathHelper.new()
 @export var accel : float;
 @export var railCount : int;
 var selectedTrackIndex
+var nextNode : Node2D;
 var csharp_script
 var nodes
 var graph_ptr_dict
 var crashed : bool;
 var refuel: bool;
+var target_switched: bool;
 var fuel_size;
 @export var ray : Node2D;
 
@@ -37,6 +39,7 @@ func _physics_process(delta):
 	# Sets after reaching target sets next target node
 	if(position.distance_to(target.position) < 1.0):
 		NextTarget()
+		SetTargetSwitched(true)
 	pass
 
 func GetRailCount():
@@ -59,6 +62,23 @@ func GetOrigin():
 
 func GetTarget():
 	return target
+
+func SetTargetSwitched(state):
+	target_switched = state
+
+func GetTargetSwitched():
+	return target_switched
+
+func GetNextNode():
+	if( nodes.has(target) ):
+		var index = nodes.find( target, 0 ) # Get object index in list
+		var tempArr = graph_ptr_dict[index] # search through graph_ptr_dict for adjacent nodes
+		if(tempArr != null && !tempArr.is_empty()):
+			var newIndex = tempArr[selectedTrackIndex%tempArr.size()]
+			nextNode = nodes[newIndex] # set new target
+		else:
+			nextNode = null
+	return nextNode
 
 func GetRay():
 	return ray
@@ -109,8 +129,10 @@ func TrainController():
 	# Pressing left/right increases/decreases selectedTrackIndex
 	if(Input.is_action_just_pressed("Axis_X+")):
 		selectedTrackIndex += 1
+		SetTargetSwitched(true)
 	elif( Input.is_action_just_pressed("Axis_X-") ):
 		selectedTrackIndex -= 1
+		SetTargetSwitched(true)
 	pass
 
 func _on_area_2d_area_entered(area):
