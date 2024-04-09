@@ -8,7 +8,7 @@
 [ext_resource type="Texture2D" uid="uid://wwek7uyd3y1b" path="res://Sprites/UI/smoke_no_outline.png" id="5_ik8c7"]
 [ext_resource type="Texture2D" uid="uid://bdfndlf0aikpe" path="res://Sprites/UI/speedometer_thick_pins.png" id="7_vhvvg"]
 [ext_resource type="Texture2D" uid="uid://drmo4lfmre3rq" path="res://Sprites/UI/speedometer_needle.png" id="8_m2q05"]
-[ext_resource type="Texture2D" uid="uid://124da6r3c654" path="res://Sprites/greybox_sprites/Triangle.png" id="9_pplcx"]
+[ext_resource type="Texture2D" uid="uid://ceh42aw4unsvk" path="res://Sprites/UI/Blue_red_Arrow.png" id="9_wjueu"]
 
 [sub_resource type="CanvasTexture" id="CanvasTexture_tua3r"]
 diffuse_texture = ExtResource("2_lrmib")
@@ -142,5 +142,5 @@ grow_horizontal = 2
 [node name="Sprite2D" type="Sprite2D" parent="HBoxContainer"]
 modulate = Color(1, 1, 1, 0.517647)
 z_index = 5
-scale = Vector2(0.3, 0.3)
-texture = ExtResource("9_pplcx")
+scale = Vector2(0.8, 0.8)
+texture = ExtResource("9_wjueu")
