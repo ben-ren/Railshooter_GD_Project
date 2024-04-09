@@ -69,6 +69,9 @@ func SetTargetSwitched(state):
 func GetTargetSwitched():
 	return target_switched
 
+func GetSelectedTrack():
+	return selectedTrackIndex
+
 func GetNextNode():
 	if( nodes.has(target) ):
 		var index = nodes.find( target, 0 ) # Get object index in list
@@ -112,9 +115,11 @@ func NextTarget():
 			print("temp Array NOT null")
 			# Store selected track from adjacency list. Use a modulo to prevent out of bounds exception
 			var newIndex = tempArr[selectedTrackIndex%tempArr.size()]
+			if nodes[newIndex] == origin:
+				SetCrashed(true)
 			origin = target # set origin as old target
 			target = nodes[newIndex] # set new target
-			selectedTrackIndex = 0
+			selectedTrackIndex = 3
 		else:
 			# temporary array is either empty or null
 			print("temp Array empty or null")
@@ -151,8 +156,6 @@ func _on_area_2d_area_entered(area):
 	elif area.is_in_group("obstacles"):
 		# trigger's crash state for train
 		SetCrashed(true)
-	else:
-		print()
 	pass # Replace with function body.
 
 func GetFuelSize():

@@ -19,6 +19,10 @@ public partial class PathingTree : Node2D
 	public Node2D generatedNode;
 	public bool graphUpdated = false;
 	int railCount;
+	int tempStartIndex;
+	int tempEndIndex;
+
+	PrintLists printL = new PrintLists();
 
 	public override void _Ready(){
 		render = new();
@@ -28,6 +32,8 @@ public partial class PathingTree : Node2D
 
 	public override void _Process(double delta)
 	{
+		printL.PrintGraphDict(this);
+		GD.Print(Railshooter.Call("GetSelectedTrack"));
 		SetRaycastRange();
 		PositionLogic();
 		//Shoots rail on left click. If ray ISN'T colliding with TargetNode && the railCount is greater than 0
@@ -151,27 +157,22 @@ public partial class PathingTree : Node2D
 	public void UpdateGraph(Node2D startNode, Node2D endNode){
 		int endIndex = nodes.IndexOf(endNode);        // Index of the endNode
 		int startIndex = nodes.IndexOf(startNode);    // Index of the startNode
-		
-		// Get or create the relation array for the endIndex
-		if(graph_ptr_dict.ContainsKey(endIndex)) {
-			// If it exists, append startIndex to the existing relation array
-			graph_ptr_dict[endIndex].Add(startIndex);
-		} else {
-			// If it doesn't exist, create a new relation array and add startIndex to it
-			Godot.Collections.Array<int> newRelation = new Godot.Collections.Array<int>();
+		Godot.Collections.Array<int> newRelation = new Godot.Collections.Array<int>();
+		// Create the relation array for the endIndex
+		if(!graph_ptr_dict.ContainsKey(endIndex)) {
 			if(ray.GetCollisionState() > 0){
-				// If there's a collision, add the index of the startNode to the new relation array
+				//add the index of the startNode to the new relation array
 				newRelation.Add(startIndex);
 			}
 			graph_ptr_dict.Add(endIndex, newRelation); // Add the new relation to the dictionary
 		}
-
+		
 		// Update the relation array for the startIndex
 		if (graph_ptr_dict.ContainsKey(startIndex)) {
 			graph_ptr_dict[startIndex].Add(endIndex);
+			graph_ptr_dict[endIndex].Insert(0, startIndex);
 		} else {
 			// If it doesn't exist, create a new relation array and add endIndex to it
-			Godot.Collections.Array<int> newRelation = new Godot.Collections.Array<int>();
 			newRelation.Add(endIndex);
 			graph_ptr_dict.Add(startIndex, newRelation); // Add the new relation to the dictionary
 		}
