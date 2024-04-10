@@ -16,6 +16,7 @@ var graph_ptr_dict
 var crashed : bool;
 var refuel: bool;
 var target_switched: bool;
+var level_complete: bool;
 var fuel_size;
 @export var ray : Node2D;
 
@@ -54,8 +55,17 @@ func SetCrashed(state):
 func GetCrashed():
 	return crashed
 
+func SetLevelCompleteState(state):
+	level_complete = state
+
+func GetLevelCompleteState():
+	return level_complete
+
 func GetSpeed():
 	return speed
+
+func GetFuelSize():
+	return fuel_size
 
 func GetOrigin():
 	return origin
@@ -154,10 +164,11 @@ func _on_area_2d_area_entered(area):
 		SetRailCount( GetRailCount() + area.get_rail_size() );
 		area.queue_free()
 	# checks if collided area is in group obstacles
-	elif area.is_in_group("obstacles"):
+	elif area.is_in_group("death_zone"):
 		# trigger's crash state for train
 		SetCrashed(true)
+	elif area.is_in_group("station"):
+		# Set flag to end level upon reaching station
+		SetLevelCompleteState(true)
+		print("level complete")
 	pass # Replace with function body.
-
-func GetFuelSize():
-	return fuel_size

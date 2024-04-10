@@ -37,8 +37,9 @@ public partial class PathingTree : Node2D
 		//Shoots rail on left click. If ray ISN'T colliding with TargetNode && the railCount is greater than 0
 		if(Input.IsActionJustPressed("left_click") && Railshooter.HasMethod("TrainController")){
 			bool crashed = (bool)Railshooter.Call("GetCrashed");
+			bool complete = (bool)Railshooter.Call("GetLevelCompleteState");
 			int num = (int)Railshooter.Call("GetRailCount");
-			if(num > 0 && !crashed){
+			if(num > 0 && !crashed && !complete){
 				ShootRail(range);
 				Railshooter.Call("SetTargetSwitched", true);
 				num--;

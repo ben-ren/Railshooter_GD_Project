@@ -1,15 +1,19 @@
-[gd_scene load_steps=12 format=3 uid="uid://d34jqft0o0ckq"]
+[gd_scene load_steps=16 format=3 uid="uid://d34jqft0o0ckq"]
 
 [ext_resource type="Texture2D" uid="uid://d2mykdqwbsixh" path="res://Sprites/tilemaps/InLand.png" id="1_7syt7"]
+[ext_resource type="Texture2D" uid="uid://cn0p158y4p4a1" path="res://Sprites/UI/LevelComplete_PlaceholderText.png" id="1_rmr4a"]
+[ext_resource type="Texture2D" uid="uid://ca6a3a0c6aeih" path="res://Sprites/greybox_sprites/square.png" id="2_3myxs"]
 [ext_resource type="Script" path="res://Scripts/C_Sharp_Scripts/CameraController.cs" id="2_3nmry"]
 [ext_resource type="PackedScene" uid="uid://bssxw8rsligum" path="res://Subscenes(Objects)/railshooter.tscn" id="2_ilv08"]
 [ext_resource type="PackedScene" uid="uid://d1t1ppeoujr0r" path="res://Subscenes(Objects)/Rail_Segment.tscn" id="3_lnqdx"]
 [ext_resource type="Script" path="res://Scripts/C_Sharp_Scripts/PathingTree.cs" id="3_wgt8d"]
+[ext_resource type="Script" path="res://Scripts/C_Sharp_Scripts/MenuControl.cs" id="4_avysb"]
 [ext_resource type="Texture2D" uid="uid://bepmsan5asw4r" path="res://Sprites/Railshooter_prototype/trackswitch_curve_transparent.png" id="5_3i6bx"]
 [ext_resource type="PackedScene" uid="uid://dkwtegjqtr4om" path="res://Subscenes(Objects)/fuel_pickup.tscn" id="9_t7w02"]
 [ext_resource type="PackedScene" uid="uid://mddtp6nl8lrm" path="res://Subscenes(Objects)/GameInterface.tscn" id="9_vbspq"]
 [ext_resource type="PackedScene" uid="uid://c4jxsgs6etv8" path="res://Subscenes(Objects)/rail_pickup.tscn" id="10_kduri"]
 [ext_resource type="PackedScene" uid="uid://jf6l6ec8awek" path="res://Subscenes(Objects)/station.tscn" id="11_5p1te"]
+[ext_resource type="PackedScene" uid="uid://dvbdedwmwtpjt" path="res://Subscenes(Objects)/dynamite.tscn" id="11_fqtnt"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_qvxn7"]
 radius = 20.0
@@ -40,6 +44,74 @@ anchor_mode = 0
 script = ExtResource("2_3nmry")
 targetObject = NodePath("../Railshooter")
 panSpeed = 3.0
+
+[node name="MenuControl" type="Control" parent="Camera2D" node_paths=PackedStringArray("train", "control")]
+layout_mode = 3
+anchors_preset = 0
+offset_left = -3.0
+offset_top = -3.0
+offset_right = 1157.0
+offset_bottom = 647.0
+script = ExtResource("4_avysb")
+train = NodePath("../../Railshooter")
+control = NodePath("LevelCompleteMenu")
+
+[node name="LevelCompleteMenu" type="Control" parent="Camera2D/MenuControl"]
+visible = false
+layout_mode = 3
+anchors_preset = 0
+offset_left = 579.0
+offset_top = 327.0
+offset_right = 619.0
+offset_bottom = 367.0
+
+[node name="TextureRect" type="TextureRect" parent="Camera2D/MenuControl/LevelCompleteMenu"]
+modulate = Color(1, 1, 1, 0.54902)
+z_index = 10
+layout_mode = 2
+offset_left = -579.0
+offset_top = -326.0
+offset_right = 578.0
+offset_bottom = 323.0
+size_flags_horizontal = 4
+size_flags_vertical = 4
+texture = ExtResource("2_3myxs")
+
+[node name="Sprite2D" type="Sprite2D" parent="Camera2D/MenuControl/LevelCompleteMenu"]
+z_index = 11
+position = Vector2(1, -267)
+texture = ExtResource("1_rmr4a")
+
+[node name="Button" type="Button" parent="Camera2D/MenuControl/LevelCompleteMenu"]
+z_index = 11
+layout_mode = 0
+offset_left = 81.0
+offset_top = 26.0
+offset_right = 344.0
+offset_bottom = 103.0
+theme_override_font_sizes/font_size = 50
+text = "Next Level"
+
+[node name="Button2" type="Button" parent="Camera2D/MenuControl/LevelCompleteMenu"]
+z_index = 11
+layout_mode = 0
+offset_left = -328.0
+offset_top = 21.0
+offset_right = -75.0
+offset_bottom = 98.0
+theme_override_font_sizes/font_size = 50
+text = "Exit Game"
+
+[node name="Button3" type="Button" parent="Camera2D/MenuControl/LevelCompleteMenu"]
+visible = false
+z_index = 11
+layout_mode = 0
+offset_left = -93.0
+offset_top = -190.0
+offset_right = 109.0
+offset_bottom = -113.0
+theme_override_font_sizes/font_size = 50
+text = "Resume"
 
 [node name="PathingTree" type="Node2D" parent="." node_paths=PackedStringArray("nodes", "Railshooter")]
 script = ExtResource("3_wgt8d")
@@ -170,3 +242,6 @@ position = Vector2(0, -500)
 [node name="RailPickup" parent="." instance=ExtResource("10_kduri")]
 position = Vector2(0, -442)
 rail_size = 1
+
+[node name="Dynamite" parent="." instance=ExtResource("11_fqtnt")]
+position = Vector2(95, -595)

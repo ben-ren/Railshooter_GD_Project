@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://ccf5km7cgpbam"
-path="res://.godot/imported/Blue_red_Arrow.png-a6f327782071a70aac73759231c7fb95.ctex"
+uid="uid://cn0p158y4p4a1"
+path="res://.godot/imported/LevelComplete_PlaceholderText.png-20c410c853d6f8fc9dbd0e7396cfb6cd.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Sprites/greybox_sprites/Blue_red_Arrow.png"
-dest_files=["res://.godot/imported/Blue_red_Arrow.png-a6f327782071a70aac73759231c7fb95.ctex"]
+source_file="res://Sprites/UI/LevelComplete_PlaceholderText.png"
+dest_files=["res://.godot/imported/LevelComplete_PlaceholderText.png-20c410c853d6f8fc9dbd0e7396cfb6cd.ctex"]
 
 [params]
 

@@ -1,0 +1,16 @@
+[gd_scene load_steps=3 format=3 uid="uid://dvbdedwmwtpjt"]
+
+[ext_resource type="Texture2D" uid="uid://o7bg34ym4y4r" path="res://Sprites/Dynamite.png" id="1_ujg14"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_3gab3"]
+size = Vector2(14, 20)
+
+[node name="Dynamite" type="Area2D" groups=["death_zone"]]
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture = ExtResource("1_ujg14")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(1, 6)
+scale = Vector2(2, 2)
+shape = SubResource("RectangleShape2D_3gab3")
