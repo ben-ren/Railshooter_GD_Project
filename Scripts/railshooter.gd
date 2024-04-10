@@ -119,7 +119,8 @@ func NextTarget():
 				SetCrashed(true)
 			origin = target # set origin as old target
 			target = nodes[newIndex] # set new target
-			selectedTrackIndex = 3
+			# set's selectedTrackIndex to the newest route at the connected rail switch
+			selectedTrackIndex = -1 
 		else:
 			# temporary array is either empty or null
 			print("temp Array empty or null")

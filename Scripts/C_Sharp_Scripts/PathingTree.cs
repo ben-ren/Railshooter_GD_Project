@@ -32,8 +32,6 @@ public partial class PathingTree : Node2D
 
 	public override void _Process(double delta)
 	{
-		printL.PrintGraphDict(this);
-		GD.Print(Railshooter.Call("GetSelectedTrack"));
 		SetRaycastRange();
 		PositionLogic();
 		//Shoots rail on left click. If ray ISN'T colliding with TargetNode && the railCount is greater than 0
